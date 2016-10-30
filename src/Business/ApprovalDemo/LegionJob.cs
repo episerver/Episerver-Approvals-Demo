@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using EPiServer;
 using EPiServer.Approvals;
 using EPiServer.Core;
@@ -11,53 +12,53 @@ namespace Ascend2016.Business.ApprovalDemo
     [ScheduledPlugIn(DisplayName = "Legion")]
     public class LegionJob : ScheduledJobBase
     {
-        private const string Username = "gandalf";
         private Injected<IApprovalEngine> _approvalEngine;
         private Injected<IApprovalRepository> _approvalRepository;
         private Injected<IContentRepository> _contentRepository;
+        private readonly IEnumerable<ILegionApprover> _approvers;
 
         private string DoJob()
         {
-            var linguo = new SpellCheckApprover();
-
-            // Get all approvals waiting for user to approve
-            var query = new ApprovalsQuery
-            {
-                Status = ApprovalStatus.Pending,
-                Username = linguo.Username
-            };
-            var approvals = _approvalRepository.Service.ListAsync(query).Result;
-
-            if (!approvals.Any())
-            {
-                return $"No approvals for {query.Username} to approve.";
-            }
-
-            // Spell check all of them
             var approved = 0;
             var rejected = 0;
-            foreach (var approval in approvals)
-            {
-                var page = _contentRepository.Service.Get<PageData>(approval.ContentLink);
-                var decision = linguo.DoDecide(page);
 
-                if (decision == ApprovalStatus.Approved)
+            foreach (var approver in _approvers)
+            {
+                // Get all approvals waiting for approval
+                var query = new ApprovalsQuery
                 {
-                    // TODO: Remove the ApprovalDecisionScope param when updating to latest Approvals API
-                    _approvalEngine.Service.ApproveAsync(approval.ID, Username, approval.ActiveStepIndex,
-                        ApprovalDecisionScope.Step).Wait();
-                    approved++;;
-                }
-                else if (decision == ApprovalStatus.Rejected)
+                    Status = ApprovalStatus.Pending,
+                    Username = approver.Username,
+                    OnlyActiveSteps = true,
+                    //Language = // TODO: Demonstrate it? MS API's only support certain languages so it could work.
+                };
+                var approvals = _approvalRepository.Service.ListAsync(query).Result;
+
+                // Approve or reject all of them
+                // TODO: Only reject, so that several approvals can be on the same step and all of them have a chance to run.
+                foreach (var approval in approvals)
                 {
-                    // TODO: Remove the ApprovalDecisionScope param when updating to latest Approvals API
-                    _approvalEngine.Service.RejectAsync(approval.ID, Username, approval.ActiveStepIndex,
-                        ApprovalDecisionScope.Step).Wait();
-                    rejected++;
+                    var page = _contentRepository.Service.Get<PageData>(approval.ContentLink);
+                    var decision = approver.DoDecide(page);
+
+                    if (decision == ApprovalStatus.Approved)
+                    {
+                        // TODO: Remove the ApprovalDecisionScope param when updating to latest Approvals API
+                        _approvalEngine.Service.ApproveAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
+                            ApprovalDecisionScope.Step).Wait();
+                        approved++; ;
+                    }
+                    else if (decision == ApprovalStatus.Rejected)
+                    {
+                        // TODO: Remove the ApprovalDecisionScope param when updating to latest Approvals API
+                        _approvalEngine.Service.RejectAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
+                            ApprovalDecisionScope.Step).Wait();
+                        rejected++;
+                    }
                 }
             }
 
-            return $"Legion reports {approved} approvals and {rejected} rejections.";
+            return $"Legion has {_approvers.Count()} daemons, that reports {approved} approvals and {rejected} rejections.";
         }
 
         #region Not important for Content Approvals API demonstration
@@ -67,6 +68,12 @@ namespace Ascend2016.Business.ApprovalDemo
         public LegionJob()
         {
             IsStoppable = true;
+
+            _approvers = new ILegionApprover[]
+            {
+                new SpellCheckApprover(),
+                new ImageCheckApprover()
+            };
         }
 
         public override void Stop()

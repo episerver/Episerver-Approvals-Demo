@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace Ascend2016.Business.ApprovalDemo
 {
-    public class SpellCheckApprover
+    public class SpellCheckApprover : ILegionApprover
     {
         public string Username => "Linguo";
 

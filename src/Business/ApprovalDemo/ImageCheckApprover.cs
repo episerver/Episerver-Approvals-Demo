@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace Ascend2016.Business.ApprovalDemo
 {
-    public class ImageCheckApprover
+    public class ImageCheckApprover : ILegionApprover
     {
         // Eleanor, Dr. Eleanor Abernathy MD JD http://simpsons.wikia.com/wiki/Eleanor_Abernathy
         private readonly Injected<IContentRepository> _contentRepository;
