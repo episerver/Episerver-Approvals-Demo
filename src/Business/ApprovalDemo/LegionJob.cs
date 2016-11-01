@@ -41,14 +41,14 @@ namespace Ascend2016.Business.ApprovalDemo
                     var page = _contentRepository.Service.Get<PageData>(approval.ContentLink);
                     var decision = approver.DoDecide(page);
 
-                    if (decision == ApprovalStatus.Approved)
+                    if (decision.Item1 == ApprovalStatus.Approved)
                     {
                         // TODO: Remove the ApprovalDecisionScope param when updating to latest Approvals API
                         _approvalEngine.Service.ApproveAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
                             ApprovalDecisionScope.Step).Wait();
                         approved++; ;
                     }
-                    else if (decision == ApprovalStatus.Rejected)
+                    else if (decision.Item1 == ApprovalStatus.Rejected)
                     {
                         // TODO: Remove the ApprovalDecisionScope param when updating to latest Approvals API
                         _approvalEngine.Service.RejectAsync(approval.ID, approver.Username, approval.ActiveStepIndex,

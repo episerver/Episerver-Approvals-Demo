@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
@@ -18,7 +19,7 @@ namespace Ascend2016.Business.ApprovalDemo
 
         public string Username => "Eleanor";
 
-        public ApprovalStatus DoDecide(PageData page)
+        public Tuple<ApprovalStatus, string> DoDecide(PageData page)
         {
             using (var httpClient = new HttpClient())
             {
@@ -37,12 +38,12 @@ namespace Ascend2016.Business.ApprovalDemo
                     if (!model.Categories.Any(x => x.Name.Contains("cat")))
                     {
                         // TODO: Add a rejection reason.
-                        return ApprovalStatus.Rejected;
+                        return new Tuple<ApprovalStatus, string>(ApprovalStatus.Rejected, "Not a cat!");
                     }
                 }
             }
 
-            return ApprovalStatus.Approved;
+            return new Tuple<ApprovalStatus, string>(ApprovalStatus.Approved, "There were cats, and it was good.");
         }
 
         private static BingComputerVisionResponse BingComputerVision(ImageData image, string language, HttpClient httpClient)

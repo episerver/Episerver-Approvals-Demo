@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Web;
 using Ascend2016.Models.Pages;
@@ -12,7 +13,7 @@ namespace Ascend2016.Business.ApprovalDemo
     {
         public string Username => "Linguo";
 
-        public ApprovalStatus DoDecide(PageData page)
+        public Tuple<ApprovalStatus, string> DoDecide(PageData page)
         {
             using (var httpClient = new HttpClient())
             {
@@ -32,12 +33,16 @@ namespace Ascend2016.Business.ApprovalDemo
                     if (model.FlaggedTokens.Any())
                     {
                         // TODO: Grab the reasons and use them as the rejection reason.
-                        return ApprovalStatus.Rejected;
+                        // Sample output: "'bene', did you mean 'been'? 'Gatas', did you mean 'Gates'?"
+                        var corrections = model.FlaggedTokens
+                            .Select(x => $"'{x.Token}', did you mean '{x.Suggestions.First().Suggestion}'?");
+
+                        return new Tuple<ApprovalStatus, string>(ApprovalStatus.Rejected, string.Join(" ", corrections));
                     }
                 }
             }
 
-            return ApprovalStatus.Approved;
+            return new Tuple<ApprovalStatus, string>(ApprovalStatus.Approved, "Spell check passed.");
         }
 
         private static BingSpellCheckResponse BingSpellChecker(string text, string language, HttpClient httpClient)

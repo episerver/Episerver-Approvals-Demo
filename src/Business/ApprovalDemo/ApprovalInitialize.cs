@@ -19,7 +19,7 @@ namespace Ascend2016.Business.ApprovalDemo
         public void Start()
         {
             _approvalEngineEvents.StepStarted += OnStepStarted;
-            //_approvalEngineEvents.Service.Started kanske?
+            // TODO: _approvalEngineEvents.Service.Started instead?
         }
 
         private async void OnStepStarted(ApprovalStepEventArgs e)
@@ -47,25 +47,22 @@ namespace Ascend2016.Business.ApprovalDemo
 
                 // Approve or reject all of them
                 // TODO: Only reject, so that several approvals can be on the same step and all of them have a chance to run.
-                //foreach (var approval in approvals)
-                {
-                    var page = _contentRepository.Get<PageData>(approval.ContentLink);
-                    var decision = approver.DoDecide(page);
+                var page = _contentRepository.Get<PageData>(approval.ContentLink);
+                var decision = approver.DoDecide(page);
 
-                    if (decision == ApprovalStatus.Approved)
-                    {
-                        // TODO: Remove the ApprovalDecisionScope param when updating to latest Approvals API
-                        _approvalEngine.ApproveAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
-                            ApprovalDecisionScope.Step).Wait();
-                        approved++; ;
-                    }
-                    else if (decision == ApprovalStatus.Rejected)
-                    {
-                        // TODO: Remove the ApprovalDecisionScope param when updating to latest Approvals API
-                        _approvalEngine.RejectAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
-                            ApprovalDecisionScope.Step).Wait();
-                        rejected++;
-                    }
+                if (decision.Item1 == ApprovalStatus.Approved)
+                {
+                    // TODO: Remove the ApprovalDecisionScope param when updating to latest Approvals API
+                    _approvalEngine.ApproveAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
+                        ApprovalDecisionScope.Step).Wait();
+                    approved++; ;
+                }
+                else if (decision.Item1 == ApprovalStatus.Rejected)
+                {
+                    // TODO: Remove the ApprovalDecisionScope param when updating to latest Approvals API
+                    _approvalEngine.RejectAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
+                        ApprovalDecisionScope.Step).Wait();
+                    rejected++;
                 }
             }
 
