@@ -32,7 +32,6 @@ namespace Ascend2016.Business.ApprovalDemo
 
                     if (model.FlaggedTokens.Any())
                     {
-                        // TODO: Grab the reasons and use them as the rejection reason.
                         // Sample output: "'bene', did you mean 'been'? 'Gatas', did you mean 'Gates'?"
                         var corrections = model.FlaggedTokens
                             .Select(x => $"'{x.Token}', did you mean '{x.Suggestions.First().Suggestion}'?");

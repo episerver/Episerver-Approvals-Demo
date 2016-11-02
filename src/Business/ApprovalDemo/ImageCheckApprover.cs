@@ -23,7 +23,7 @@ namespace Ascend2016.Business.ApprovalDemo
         {
             using (var httpClient = new HttpClient())
             {
-                // Using Bing Spell Check service to look for spelling mistakes.
+                // Using Bing Computer Vision service to look for cat images.
                 httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key",
                     System.Configuration.ConfigurationManager.AppSettings["BingComputerVisionKey"]);
 
@@ -37,7 +37,6 @@ namespace Ascend2016.Business.ApprovalDemo
 
                     if (!model.Categories.Any(x => x.Name.Contains("cat")))
                     {
-                        // TODO: Add a rejection reason.
                         return new Tuple<ApprovalStatus, string>(ApprovalStatus.Rejected, "Not a cat!");
                     }
                 }
@@ -54,17 +53,6 @@ namespace Ascend2016.Business.ApprovalDemo
 
             var uri = $"https://api.projectoxford.ai/vision/v1.0/analyze?{queryString}";
 
-            //// Note: Demonstration of cat detection.
-            //using (HttpContent content = new StringContent(
-            //            @"{""url"":""https://upload.wikimedia.org/wikipedia/commons/b/b0/PSM_V37_D105_English_tabby_cat.jpg""}")
-            //)
-            //{
-            //    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            //    var response = httpClient.PostAsync(uri, content).Result;
-            //    var jsonString = response.Content.ReadAsStringAsync().Result;
-            //    return JsonConvert.DeserializeObject<BingComputerVisionResponse>(jsonString);
-            //}
-
             byte[] byteData;
             using (var stream = image.BinaryData.OpenRead())
             {
@@ -72,10 +60,8 @@ namespace Ascend2016.Business.ApprovalDemo
                 stream.Read(byteData, 0, (int)stream.Length);
             }
             using (var content = new ByteArrayContent(byteData))
-            //using (var content = new MultipartFormDataContent())
-            //using (HttpContent content = new StreamContent(image.BinaryData.OpenRead())) // TODO: Add bufferSize param
             {
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream"); // TODO: Shouldn't there be a XContent class that sets this? StreamContent doesn't.
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 var response = httpClient.PostAsync(uri, content).Result;
                 var jsonString = response.Content.ReadAsStringAsync().Result;
 

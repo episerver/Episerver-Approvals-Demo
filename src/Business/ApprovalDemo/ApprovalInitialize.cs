@@ -8,6 +8,7 @@ using EPiServer.Shell.UI.Internal;
 
 namespace Ascend2016.Business.ApprovalDemo
 {
+    // TODO: This does the same thing as LegionJob. Pick one.
     [ServiceConfiguration(typeof(IEventListener), Lifecycle = ServiceInstanceScope.Singleton)]
     public class ApprovalInitialize : IEventListener
     {
@@ -19,7 +20,7 @@ namespace Ascend2016.Business.ApprovalDemo
         public void Start()
         {
             _approvalEngineEvents.StepStarted += OnStepStarted;
-            // TODO: _approvalEngineEvents.Service.Started instead?
+            // TODO: Show _approvalEngineEvents.Service.Started instead?
         }
 
         private async void OnStepStarted(ApprovalStepEventArgs e)
@@ -29,40 +30,22 @@ namespace Ascend2016.Business.ApprovalDemo
             var acceptedApprovers = approvalDefinition.Steps[approval.ActiveStepIndex].Approvers.Select(x => x.Username);
             var stepDaemons = _daemons.Where(x => acceptedApprovers.Contains(x.Username));
 
-            // Auto run all approvers or just one?
-            var approved = 0;
-            var rejected = 0;
-
             foreach (var approver in stepDaemons)
             {
-                //// Get all approvals waiting for approval
-                //var query = new ApprovalsQuery
-                //{
-                //    Status = ApprovalStatus.Pending,
-                //    Username = approver.Username,
-                //    OnlyActiveSteps = true,
-                //    //Language = // TODO: Demonstrate it? MS API's only support certain languages so it could work.
-                //};
-                //var approvals = _approvalRepository.ListAsync(query).Result;
-
-                // Approve or reject all of them
-                // TODO: Only reject, so that several approvals can be on the same step and all of them have a chance to run.
+                // Approve or reject. The first one "wins" but the subsequent calls won't fail and in the future that information could be useful.
+                // TODO: Only reject? So that several approvals can be on the same step and all of them have a chance to run.
                 var page = _contentRepository.Get<PageData>(approval.ContentLink);
                 var decision = approver.DoDecide(page);
 
                 if (decision.Item1 == ApprovalStatus.Approved)
                 {
-                    // TODO: Remove the ApprovalDecisionScope param when updating to latest Approvals API
                     _approvalEngine.ApproveAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
                         ApprovalDecisionScope.Step).Wait();
-                    approved++; ;
                 }
                 else if (decision.Item1 == ApprovalStatus.Rejected)
                 {
-                    // TODO: Remove the ApprovalDecisionScope param when updating to latest Approvals API
                     _approvalEngine.RejectAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
                         ApprovalDecisionScope.Step).Wait();
-                    rejected++;
                 }
             }
 

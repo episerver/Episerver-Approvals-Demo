@@ -9,6 +9,7 @@ using EPiServer.ServiceLocation;
 
 namespace Ascend2016.Business.ApprovalDemo
 {
+    // TODO: This does the same thing as ApprovalInitialize. Pick one.
     [ScheduledPlugIn(DisplayName = "Legion")]
     public class LegionJob : ScheduledJobBase
     {
@@ -35,7 +36,7 @@ namespace Ascend2016.Business.ApprovalDemo
                 var approvals = _approvalRepository.Service.ListAsync(query).Result;
 
                 // Approve or reject all of them
-                // TODO: Only reject, so that several approvals can be on the same step and all of them have a chance to run.
+                // TODO: Only reject? So that several approvals can be on the same step and all of them have a chance to run.
                 foreach (var approval in approvals)
                 {
                     var page = _contentRepository.Service.Get<PageData>(approval.ContentLink);
@@ -43,14 +44,12 @@ namespace Ascend2016.Business.ApprovalDemo
 
                     if (decision.Item1 == ApprovalStatus.Approved)
                     {
-                        // TODO: Remove the ApprovalDecisionScope param when updating to latest Approvals API
                         _approvalEngine.Service.ApproveAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
                             ApprovalDecisionScope.Step).Wait();
                         approved++; ;
                     }
                     else if (decision.Item1 == ApprovalStatus.Rejected)
                     {
-                        // TODO: Remove the ApprovalDecisionScope param when updating to latest Approvals API
                         _approvalEngine.Service.RejectAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
                             ApprovalDecisionScope.Step).Wait();
                         rejected++;
