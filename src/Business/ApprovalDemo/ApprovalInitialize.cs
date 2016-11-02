@@ -68,7 +68,8 @@ namespace Ascend2016.Business.ApprovalDemo
             _daemons = new ILegionApprover[]
             {
                 new SpellCheckApprover(),
-                new ImageCheckApprover()
+                new ImageCheckApprover(),
+                new SentimentCheckApprover()
             };
         }
 

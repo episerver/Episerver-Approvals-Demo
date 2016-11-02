@@ -249,9 +249,11 @@
     <Compile Include="Business\ApprovalDemo\ApprovalInitialize.cs" />
     <Compile Include="Business\ApprovalDemo\BingComputerVisionResponse.cs" />
     <Compile Include="Business\ApprovalDemo\BingSpellCheckResponse.cs" />
+    <Compile Include="Business\ApprovalDemo\BingTextAnalyticsResponse.cs" />
     <Compile Include="Business\ApprovalDemo\ILegionApprover.cs" />
     <Compile Include="Business\ApprovalDemo\ImageCheckApprover.cs" />
     <Compile Include="Business\ApprovalDemo\LegionJob.cs" />
+    <Compile Include="Business\ApprovalDemo\SentimentCheckApprover.cs" />
     <Compile Include="Business\ApprovalDemo\SpellCheckApprover.cs" />
     <Compile Include="Business\Channels\DisplayResolutionBase.cs" />
     <Compile Include="Business\Channels\DisplayResolutions.cs" />
