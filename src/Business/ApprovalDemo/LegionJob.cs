@@ -50,6 +50,7 @@ namespace Ascend2016.Business.ApprovalDemo
                     }
                     else if (decision.Item1 == ApprovalStatus.Rejected)
                     {
+                        // Note: This will throw an exception if the step has already been approved.
                         _approvalEngine.Service.RejectAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
                             ApprovalDecisionScope.Step).Wait();
                         rejected++;
