@@ -247,9 +247,6 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ItemGroup>
     <Compile Include="Business\ApprovalDemo\ApprovalInitialize.cs" />
-    <Compile Include="Business\ApprovalDemo\BingComputerVisionResponse.cs" />
-    <Compile Include="Business\ApprovalDemo\BingSpellCheckResponse.cs" />
-    <Compile Include="Business\ApprovalDemo\BingTextAnalyticsResponse.cs" />
     <Compile Include="Business\ApprovalDemo\ILegionApprover.cs" />
     <Compile Include="Business\ApprovalDemo\ImageCheckApprover.cs" />
     <Compile Include="Business\ApprovalDemo\LegionJob.cs" />

@@ -14,36 +14,47 @@ namespace Ascend2016.Business.ApprovalDemo
 {
     public class ImageCheckApprover : ILegionApprover
     {
-        // Eleanor, Dr. Eleanor Abernathy MD JD http://simpsons.wikia.com/wiki/Eleanor_Abernathy
-        private readonly Injected<IContentRepository> _contentRepository;
-
+        // Eleanor, Dr. Eleanor Abernathy MD JD, AKA Crazy Cat Lady http://simpsons.wikia.com/wiki/Eleanor_Abernathy
         public string Username => "Eleanor";
+
+        private readonly Injected<IContentRepository> _contentRepository;
 
         public Tuple<ApprovalStatus, string> DoDecide(PageData page)
         {
+            var sitePageData = page as SitePageData;
+            if (sitePageData == null)
+            {
+                return Tuple.Create(
+                    ApprovalStatus.Rejected,
+                    "There can't be cats on your page type!");
+            }
+
             using (var httpClient = new HttpClient())
             {
                 // Using Bing Computer Vision service to look for cat images.
                 httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key",
                     System.Configuration.ConfigurationManager.AppSettings["BingComputerVisionKey"]);
 
-                var sitePageData = page as SitePageData;
-                if (sitePageData != null)
+                var pageImage = _contentRepository.Service
+                    .Get<ImageData>(sitePageData.PageImage);
+                var language = sitePageData.Language.TwoLetterISOLanguageName;
+
+                var model = BingComputerVision(pageImage, language, httpClient);
+
+                if (!model.Categories.Any(x => x.Name.Contains("cat")))
                 {
-                    var pageImage = _contentRepository.Service.Get<ImageData>(sitePageData.PageImage);
-                    var language = page.Language.TwoLetterISOLanguageName; // Obviously this API wants "en" when the spell checker API wanted "en-US".
-
-                    var model = BingComputerVision(pageImage, language, httpClient);
-
-                    if (!model.Categories.Any(x => x.Name.Contains("cat")))
-                    {
-                        return new Tuple<ApprovalStatus, string>(ApprovalStatus.Rejected, "Not a cat!");
-                    }
+                    return Tuple.Create(
+                        ApprovalStatus.Rejected,
+                        "Not a cat!");
                 }
             }
 
-            return new Tuple<ApprovalStatus, string>(ApprovalStatus.Approved, "There were cats, and it was good.");
+            return Tuple.Create(
+                ApprovalStatus.Approved,
+                "There were cats, and it was good.");
         }
+
+        #region Not important for Content Approvals API demonstration
 
         private static BingComputerVisionResponse BingComputerVision(ImageData image, string language, HttpClient httpClient)
         {
@@ -68,5 +79,31 @@ namespace Ascend2016.Business.ApprovalDemo
                 return JsonConvert.DeserializeObject<BingComputerVisionResponse>(jsonString);
             }
         }
+
+        /// <summary>
+        /// A class used to deserialize the JSON response from Bing's Computer Vision API.
+        /// https://www.microsoft.com/cognitive-services/en-us/computer-vision-api
+        /// </summary>
+        public class BingComputerVisionResponse
+        {
+            public Category[] Categories { get; set; }
+            public string RequestId { get; set; }
+            public MetadataObject Metadata { get; set; }
+
+            public class MetadataObject
+            {
+                public int Width { get; set; }
+                public int Height { get; set; }
+                public string Format { get; set; }
+            }
+
+            public class Category
+            {
+                public string Name { get; set; }
+                public float Score { get; set; }
+            }
+        }
+
+        #endregion
     }
 }

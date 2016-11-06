@@ -16,49 +16,55 @@ namespace Ascend2016.Business.ApprovalDemo
         private Injected<IApprovalEngine> _approvalEngine;
         private Injected<IApprovalRepository> _approvalRepository;
         private Injected<IContentRepository> _contentRepository;
-        private readonly IEnumerable<ILegionApprover> _approvers;
+        private readonly IEnumerable<ILegionApprover> _bots;
 
         private string DoJob()
         {
             var approved = 0;
             var rejected = 0;
 
-            foreach (var approver in _approvers)
+            foreach (var bot in _bots)
             {
                 // Get all approvals waiting for approval
                 var query = new ApprovalsQuery
                 {
                     Status = ApprovalStatus.Pending,
-                    Username = approver.Username,
-                    OnlyActiveSteps = true,
-                    //Language = // TODO: Demonstrate it? MS API's only support certain languages so it could work.
+                    Username = bot.Username,
+                    OnlyActiveSteps = true
                 };
-                var approvals = _approvalRepository.Service.ListAsync(query).Result;
+                var approvals = _approvalRepository.Service
+                    .ListAsync(query).Result;
 
                 // Approve or reject all of them
-                // TODO: Only reject? So that several approvals can be on the same step and all of them have a chance to run.
                 foreach (var approval in approvals)
                 {
-                    var page = _contentRepository.Service.Get<PageData>(approval.ContentLink);
-                    var decision = approver.DoDecide(page);
+                    var page = _contentRepository.Service
+                        .Get<PageData>(approval.ContentLink);
+                    var decision = bot.DoDecide(page);
 
                     if (decision.Item1 == ApprovalStatus.Approved)
                     {
-                        _approvalEngine.Service.ApproveAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
+                        _approvalEngine.Service.ApproveAsync(
+                            approval.ID,
+                            bot.Username,
+                            approval.ActiveStepIndex,
                             ApprovalDecisionScope.Step).Wait();
                         approved++; ;
                     }
                     else if (decision.Item1 == ApprovalStatus.Rejected)
                     {
-                        // Note: This will throw an exception if the step has already been approved.
-                        _approvalEngine.Service.RejectAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
+                        // Note: This will throw an exception if already approved.
+                        _approvalEngine.Service.RejectAsync(
+                            approval.ID,
+                            bot.Username,
+                            approval.ActiveStepIndex,
                             ApprovalDecisionScope.Step).Wait();
                         rejected++;
                     }
                 }
             }
 
-            return $"Legion has {_approvers.Count()} daemons, that reports {approved} approvals and {rejected} rejections.";
+            return $"Legion has {_bots.Count()} daemons, that reports {approved} approvals and {rejected} rejections.";
         }
 
         #region Not important for Content Approvals API demonstration
@@ -69,7 +75,7 @@ namespace Ascend2016.Business.ApprovalDemo
         {
             IsStoppable = true;
 
-            _approvers = new ILegionApprover[]
+            _bots = new ILegionApprover[]
             {
                 new SpellCheckApprover(),
                 new ImageCheckApprover()

@@ -11,38 +11,48 @@ namespace Ascend2016.Business.ApprovalDemo
 {
     public class SpellCheckApprover : ILegionApprover
     {
+        // Linguo, Lisa's spell checking robot http://simpsons.wikia.com/wiki/Linguo
         public string Username => "Linguo";
 
         public Tuple<ApprovalStatus, string> DoDecide(PageData page)
         {
+            var sitePageData = page as SitePageData;
+            if (sitePageData == null)
+            {
+                return Tuple.Create(
+                    ApprovalStatus.Rejected,
+                    "Sentence fragment!");
+            }
+
             using (var httpClient = new HttpClient())
             {
                 // Using Bing Spell Check service to look for spelling mistakes.
                 httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key",
                     System.Configuration.ConfigurationManager.AppSettings["BingSpellCheckKey"]);
 
-                var sitePageData = page as SitePageData;
-                if (sitePageData != null)
+                var teaserText = sitePageData.TeaserText;
+                var language = page.Language.TextInfo.CultureName;
+
+                var model = BingSpellChecker(teaserText, language, httpClient);
+
+                if (model.FlaggedTokens.Any())
                 {
-                    var teaserText = sitePageData.TeaserText;
-                    //teaserText = "Bill Gatas"; // Note: Used to demo a spelling mistake.
-                    var language = page.Language.TextInfo.CultureName;
+                    // Sample output: "'bene', did you mean 'been'? 'Gatas', did you mean 'Gates'?"
+                    var corrections = model.FlaggedTokens
+                        .Select(x => $"'{x.Token}', did you mean '{x.Suggestions.First().Suggestion}'?");
 
-                    var model = BingSpellChecker(teaserText, language, httpClient);
-
-                    if (model.FlaggedTokens.Any())
-                    {
-                        // Sample output: "'bene', did you mean 'been'? 'Gatas', did you mean 'Gates'?"
-                        var corrections = model.FlaggedTokens
-                            .Select(x => $"'{x.Token}', did you mean '{x.Suggestions.First().Suggestion}'?");
-
-                        return new Tuple<ApprovalStatus, string>(ApprovalStatus.Rejected, string.Join(" ", corrections));
-                    }
+                    return Tuple.Create(
+                        ApprovalStatus.Rejected,
+                        string.Join(" ", corrections));
                 }
             }
 
-            return new Tuple<ApprovalStatus, string>(ApprovalStatus.Approved, "Spell check passed.");
+            return Tuple.Create(
+                ApprovalStatus.Approved,
+                "Spell check passed.");
         }
+
+        #region Not important for Content Approvals API demonstration
 
         private static BingSpellCheckResponse BingSpellChecker(string text, string language, HttpClient httpClient)
         {
@@ -55,19 +65,41 @@ namespace Ascend2016.Business.ApprovalDemo
             var response = httpClient.GetStringAsync(uri).Result;
             var model = JsonConvert.DeserializeObject<BingSpellCheckResponse>(response);
 
-            //// When texts are too long for a URL query then this is the way to go.
-            //var formContent = new[]
-            //{
-            //    new KeyValuePair<string, string>("text", text)
-            //};
-            //using (var content = new FormUrlEncodedContent(formContent))
-            //{
-            //    var response = httpClient.PostAsync(uri, content).Result;
-            //    var jsonString = response.Content.ReadAsStringAsync().Result;
-            //    var model = JsonConvert.DeserializeObject<BingSpellCheckResponse>(jsonString);
-            //}
-
             return model;
         }
+
+        /// <summary>
+        /// A class used to deserialize the JSON response from Bing's Spell Check API.
+        /// https://www.microsoft.com/cognitive-services/en-us/bing-spell-check-api
+        /// </summary>
+        public class BingSpellCheckResponse
+        {
+            public string _type { get; set; }
+            public Flaggedtoken[] FlaggedTokens { get; set; }
+            public Error[] Errors { get; set; }
+
+            public class Flaggedtoken
+            {
+                public int Offset { get; set; }
+                public string Token { get; set; }
+                public string Type { get; set; }
+                public SuggestionObject[] Suggestions { get; set; }
+
+                public class SuggestionObject
+                {
+                    public string Suggestion { get; set; }
+                    public int Score { get; set; }
+                }
+            }
+
+            public class Error
+            {
+                public string Code { get; set; }
+                public string Message { get; set; }
+                public string Parameter { get; set; }
+            }
+        }
+
+        #endregion
     }
 }

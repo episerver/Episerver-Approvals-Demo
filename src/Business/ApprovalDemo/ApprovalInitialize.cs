@@ -8,7 +8,6 @@ using EPiServer.Shell.UI.Internal;
 
 namespace Ascend2016.Business.ApprovalDemo
 {
-    // TODO: This does the same thing as LegionJob. Pick one.
     [ServiceConfiguration(typeof(IEventListener), Lifecycle = ServiceInstanceScope.Singleton)]
     public class ApprovalInitialize : IEventListener
     {
@@ -20,32 +19,45 @@ namespace Ascend2016.Business.ApprovalDemo
         public void Start()
         {
             _approvalEngineEvents.StepStarted += OnStepStarted;
-            // TODO: Show _approvalEngineEvents.Service.Started instead?
         }
 
         private async void OnStepStarted(ApprovalStepEventArgs e)
         {
-            var approval = await _approvalRepository.GetAsync(e.ApprovalID).ConfigureAwait(false);
-            var approvalDefinition = await _approvalDefinitionVersionRepository.GetAsync(approval.DefinitionVersionID).ConfigureAwait(false);
-            var acceptedApprovers = approvalDefinition.Steps[approval.ActiveStepIndex].Approvers.Select(x => x.Username);
-            var stepDaemons = _daemons.Where(x => acceptedApprovers.Contains(x.Username));
+            var approval = await _approvalRepository
+                .GetAsync(e.ApprovalID).ConfigureAwait(false);
+            var approvalDefinition = await _approvalDefinitionVersionRepository
+                .GetAsync(approval.DefinitionVersionID).ConfigureAwait(false);
+            var acceptedApprovers = approvalDefinition
+                .Steps[approval.ActiveStepIndex]
+                .Approvers
+                .Select(x => x.Username);
+            var botsInStep = _bots
+                .Where(x => acceptedApprovers.Contains(x.Username));
 
-            foreach (var approver in stepDaemons)
+            var page = _contentRepository
+                .Get<PageData>(approval.ContentLink);
+
+            foreach (var bot in botsInStep)
             {
-                // Approve or reject. The first one "wins" but the subsequent calls won't fail and in the future that information could be useful.
-                // TODO: Only reject? So that several approvals can be on the same step and all of them have a chance to run.
-                var page = _contentRepository.Get<PageData>(approval.ContentLink);
-                var decision = approver.DoDecide(page);
+                // Approve or reject. The first approver "wins" but the subsequent approves won't fail and in the future that information could be useful.
+                // TODO: Jonas, maybe I could or should use IApprovalRepository.SaveDecisionAsync instead?
+                var decision = bot.DoDecide(page);
 
                 if (decision.Item1 == ApprovalStatus.Approved)
                 {
-                    _approvalEngine.ApproveAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
+                    _approvalEngine.ApproveAsync(
+                        approval.ID,
+                        bot.Username,
+                        approval.ActiveStepIndex,
                         ApprovalDecisionScope.Step).Wait();
                 }
                 else if (decision.Item1 == ApprovalStatus.Rejected)
                 {
-                    // Note: This will throw an exception if the step has already been approved.
-                    _approvalEngine.RejectAsync(approval.ID, approver.Username, approval.ActiveStepIndex,
+                    // Note: Rejecting will throw an exception if the step has already been approved.
+                    _approvalEngine.RejectAsync(
+                        approval.ID,
+                        bot.Username,
+                        approval.ActiveStepIndex,
                         ApprovalDecisionScope.Step).Wait();
                 }
             }
@@ -55,7 +67,7 @@ namespace Ascend2016.Business.ApprovalDemo
         #region Not important for Notifications API demonstration
 
         private readonly IContentRepository _contentRepository;
-        private readonly IEnumerable<ILegionApprover> _daemons;
+        private readonly IEnumerable<ILegionApprover> _bots;
 
         public ApprovalInitialize(IApprovalEngineEvents approvalEngineEvents, IApprovalRepository approvalRepository, IContentRepository contentRepository, IApprovalEngine approvalEngine, IApprovalDefinitionVersionRepository approvalDefinitionVersionRepository)
         {
@@ -65,7 +77,7 @@ namespace Ascend2016.Business.ApprovalDemo
             _approvalEngine = approvalEngine;
             _approvalDefinitionVersionRepository = approvalDefinitionVersionRepository;
 
-            _daemons = new ILegionApprover[]
+            _bots = new ILegionApprover[]
             {
                 new SpellCheckApprover(),
                 new ImageCheckApprover(),
