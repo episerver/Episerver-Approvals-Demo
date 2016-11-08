@@ -5,6 +5,7 @@ using EPiServer.Approvals;
 using EPiServer.Core;
 using EPiServer.Framework;
 using EPiServer.Framework.Initialization;
+using EPiServer.Notification;
 
 namespace Ascend2016.Business.ApprovalDemo
 {
@@ -44,6 +45,15 @@ namespace Ascend2016.Business.ApprovalDemo
                         bot.Username,
                         e.StepIndex,
                         ApprovalDecisionScope.Step).Wait();
+                    _notifier.PostNotificationAsync(new NotificationMessage
+                    {
+                        ChannelName = "Legion",
+                        TypeName = "EventBased",
+                        Subject = $"{bot.Username} approved {page.Name}",
+                        Content = decision.Item2,
+                        Sender = new NotificationUser(bot.Username),
+                        Recipients = new []{ new NotificationUser(approval.StartedBy) }
+                    }).Wait();
                 }
                 else if (decision.Item1 == ApprovalStatus.Rejected)
                 {
@@ -52,6 +62,15 @@ namespace Ascend2016.Business.ApprovalDemo
                         bot.Username,
                         e.StepIndex,
                         ApprovalDecisionScope.Step).Wait();
+                    _notifier.PostNotificationAsync(new NotificationMessage
+                    {
+                        ChannelName = "Legion",
+                        TypeName = "EventBased",
+                        Subject = $"{bot.Username} DENIED {page.Name}!",
+                        Content = decision.Item2,
+                        Sender = new NotificationUser(bot.Username),
+                        Recipients = new[] { new NotificationUser(approval.StartedBy) }
+                    }).Wait();
                     // Note: Rejecting will throw an exception if the step has already been approved.
                     break;
                 }
@@ -62,6 +81,7 @@ namespace Ascend2016.Business.ApprovalDemo
 
         private IContentRepository _contentRepository;
         private IEnumerable<ILegionApprover> _bots;
+        private INotifier _notifier;
 
         public void Initialize(InitializationEngine context)
         {
@@ -70,8 +90,7 @@ namespace Ascend2016.Business.ApprovalDemo
             _approvalRepository = context.Locate.Advanced.GetInstance<IApprovalRepository>();
             _approvalDefinitionVersionRepository = context.Locate.Advanced.GetInstance<IApprovalDefinitionVersionRepository>();
             _contentRepository = context.Locate.Advanced.GetInstance<IContentRepository>();
-
-            _approvalEngineEvents.StepStarted += OnStepStarted;
+            _notifier = context.Locate.Advanced.GetInstance<INotifier>();
 
             _bots = new ILegionApprover[]
             {
@@ -79,6 +98,8 @@ namespace Ascend2016.Business.ApprovalDemo
                 new ImageCheckApprover(),
                 new SentimentCheckApprover()
             };
+
+            _approvalEngineEvents.StepStarted += OnStepStarted;
         }
 
         public void Uninitialize(InitializationEngine context)
