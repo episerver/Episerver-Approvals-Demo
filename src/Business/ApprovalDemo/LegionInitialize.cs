@@ -9,7 +9,7 @@ using EPiServer.Framework.Initialization;
 namespace Ascend2016.Business.ApprovalDemo
 {
     [ModuleDependency(typeof(EPiServer.Web.InitializationModule))]
-    public class ApprovalInitialize : IInitializableModule
+    public class LegionInitialize : IInitializableModule
     {
         private IApprovalEngine _approvalEngine;
         private IApprovalEngineEvents _approvalEngineEvents;

@@ -9,7 +9,7 @@ using EPiServer.ServiceLocation;
 
 namespace Ascend2016.Business.ApprovalDemo
 {
-    // TODO: This does the same thing as ApprovalInitialize. Pick one.
+    // TODO: This does the same thing as LegionInitialize. Pick one.
     [ScheduledPlugIn(DisplayName = "Legion")]
     public class LegionJob : ScheduledJobBase
     {
