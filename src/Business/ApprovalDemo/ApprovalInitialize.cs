@@ -3,23 +3,18 @@ using System.Linq;
 using EPiServer;
 using EPiServer.Approvals;
 using EPiServer.Core;
-using EPiServer.ServiceLocation;
-using EPiServer.Shell.UI.Internal;
+using EPiServer.Framework;
+using EPiServer.Framework.Initialization;
 
 namespace Ascend2016.Business.ApprovalDemo
 {
-    [ServiceConfiguration(typeof(IEventListener), Lifecycle = ServiceInstanceScope.Singleton)]
-    public class ApprovalInitialize : IEventListener
+    [ModuleDependency(typeof(EPiServer.Web.InitializationModule))]
+    public class ApprovalInitialize : IInitializableModule
     {
-        private readonly IApprovalEngine _approvalEngine;
-        private readonly IApprovalEngineEvents _approvalEngineEvents;
-        private readonly IApprovalRepository _approvalRepository;
-        private readonly IApprovalDefinitionVersionRepository _approvalDefinitionVersionRepository;
-
-        public void Start()
-        {
-            _approvalEngineEvents.StepStarted += OnStepStarted;
-        }
+        private IApprovalEngine _approvalEngine;
+        private IApprovalEngineEvents _approvalEngineEvents;
+        private IApprovalRepository _approvalRepository;
+        private IApprovalDefinitionVersionRepository _approvalDefinitionVersionRepository;
 
         private async void OnStepStarted(ApprovalStepEventArgs e)
         {
@@ -61,21 +56,22 @@ namespace Ascend2016.Business.ApprovalDemo
                         ApprovalDecisionScope.Step).Wait();
                 }
             }
-
         }
 
         #region Not important for Notifications API demonstration
 
-        private readonly IContentRepository _contentRepository;
-        private readonly IEnumerable<ILegionApprover> _bots;
+        private IContentRepository _contentRepository;
+        private IEnumerable<ILegionApprover> _bots;
 
-        public ApprovalInitialize(IApprovalEngineEvents approvalEngineEvents, IApprovalRepository approvalRepository, IContentRepository contentRepository, IApprovalEngine approvalEngine, IApprovalDefinitionVersionRepository approvalDefinitionVersionRepository)
+        public void Initialize(InitializationEngine context)
         {
-            _approvalEngineEvents = approvalEngineEvents;
-            _approvalRepository = approvalRepository;
-            _contentRepository = contentRepository;
-            _approvalEngine = approvalEngine;
-            _approvalDefinitionVersionRepository = approvalDefinitionVersionRepository;
+            _approvalEngine = context.Locate.Advanced.GetInstance<IApprovalEngine>();
+            _approvalEngineEvents = context.Locate.Advanced.GetInstance<IApprovalEngineEvents>();
+            _approvalRepository = context.Locate.Advanced.GetInstance<IApprovalRepository>();
+            _approvalDefinitionVersionRepository = context.Locate.Advanced.GetInstance<IApprovalDefinitionVersionRepository>();
+            _contentRepository = context.Locate.Advanced.GetInstance<IContentRepository>();
+
+            _approvalEngineEvents.StepStarted += OnStepStarted;
 
             _bots = new ILegionApprover[]
             {
@@ -85,8 +81,9 @@ namespace Ascend2016.Business.ApprovalDemo
             };
         }
 
-        public void Stop()
+        public void Uninitialize(InitializationEngine context)
         {
+            _approvalEngineEvents.StepStarted -= OnStepStarted;
         }
 
         #endregion
