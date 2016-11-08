@@ -53,13 +53,14 @@ namespace Ascend2016.Business.ApprovalDemo
                     }
                     else if (decision.Item1 == ApprovalStatus.Rejected)
                     {
-                        // Note: This will throw an exception if already approved.
                         _approvalEngine.Service.RejectAsync(
                             approval.ID,
                             bot.Username,
                             approval.ActiveStepIndex,
                             ApprovalDecisionScope.Step).Wait();
                         rejected++;
+                        // Note: Rejecting will throw an exception if the step has already been approved.
+                        break;
                     }
                 }
             }
