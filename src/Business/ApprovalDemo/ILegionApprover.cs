@@ -7,6 +7,6 @@ namespace Ascend2016.Business.ApprovalDemo
     public interface ILegionApprover
     {
         string Username { get; }
-        Tuple<ApprovalStatus, string> DoDecide(PageData page); // TODO: Use ApprovalStepDecision with stage5 instead
+        Tuple<ApprovalStatus, string> DoDecide(PageData page);
     }
 }

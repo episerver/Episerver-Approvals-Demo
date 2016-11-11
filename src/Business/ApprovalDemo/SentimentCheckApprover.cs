@@ -40,7 +40,7 @@ namespace Ascend2016.Business.ApprovalDemo
                 {
                     return Tuple.Create(
                         ApprovalStatus.Rejected,
-                        "Don't be a negative nilly!");
+                        "Don't be a negative-nilly!");
                 }
             }
 
