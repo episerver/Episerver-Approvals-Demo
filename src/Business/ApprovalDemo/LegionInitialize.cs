@@ -2,6 +2,7 @@
 using System.Linq;
 using EPiServer;
 using EPiServer.Approvals;
+using EPiServer.Approvals.ContentApprovals;
 using EPiServer.Core;
 using EPiServer.Framework;
 using EPiServer.Framework.Initialization;
@@ -14,18 +15,12 @@ namespace Ascend2016.Business.ApprovalDemo
     {
         private IApprovalEngine _approvalEngine;
         private IApprovalEngineEvents _approvalEngineEvents;
-        private IApprovalRepository _approvalRepository;
         private IApprovalDefinitionVersionRepository _approvalDefinitionVersionRepository;
 
         private async void OnStepStarted(ApprovalStepEventArgs e)
         {
-            // This will be slightly easier soon :)
-
-            var approval = await _approvalRepository
-                .GetAsync(e.ApprovalID).ConfigureAwait(false);
-
             var approvalDefinition = await _approvalDefinitionVersionRepository
-                .GetAsync(approval.DefinitionVersionID).ConfigureAwait(false);
+                .GetAsync(e.DefinitionVersionID).ConfigureAwait(false);
 
             var approversInStep = approvalDefinition
                 .Steps[e.StepIndex]
@@ -36,7 +31,7 @@ namespace Ascend2016.Business.ApprovalDemo
                 .Where(x => approversInStep.Contains(x.Username));
 
             var page = _contentRepository
-                .Get<PageData>(approval.ContentLink);
+                .Get<PageData>(e.GetContentLink());
 
             foreach (var bot in botsInStep)
             {
@@ -46,44 +41,24 @@ namespace Ascend2016.Business.ApprovalDemo
                 if (decision.Item1 == ApprovalStatus.Rejected)
                 {
                     _approvalEngine.RejectAsync(
-                        approval.ID,
+                        e.ApprovalID,
                         bot.Username,
                         e.StepIndex,
                         ApprovalDecisionScope.Step).Wait();
-
-                    SendNotification(false, bot.Username, decision.Item2, page.Name, approval.StartedBy);
                 }
                 else if (decision.Item1 == ApprovalStatus.Approved)
                 {
                     _approvalEngine.ApproveAsync(
-                        approval.ID,
+                        e.ApprovalID,
                         bot.Username,
                         e.StepIndex,
                         ApprovalDecisionScope.Step).Wait();
-
-                    SendNotification(true, bot.Username, decision.Item2, page.Name, approval.StartedBy);
 
                     // Note: Rejecting will throw an exception if the step has already been approved.
                     break;
                 }
 
             }
-        }
-
-        private void SendNotification(bool approved, string username, string comment, string pageName, string startedBy)
-        {
-            var action = approved ? "approved" : "DECLINED";
-
-            _notifier.PostNotificationAsync(new NotificationMessage
-            {
-                ChannelName = "Legion",
-                TypeName = "EventBased",
-                Subject = $"{username} {action} {pageName}",
-                Content = comment,
-                Sender = new NotificationUser(username),
-                Recipients = new[] { new NotificationUser(startedBy) }
-            }).Wait();
-
         }
 
         #region Not important for Approvals API demonstration
@@ -96,7 +71,6 @@ namespace Ascend2016.Business.ApprovalDemo
         {
             _approvalEngine = context.Locate.Advanced.GetInstance<IApprovalEngine>();
             _approvalEngineEvents = context.Locate.Advanced.GetInstance<IApprovalEngineEvents>();
-            _approvalRepository = context.Locate.Advanced.GetInstance<IApprovalRepository>();
             _approvalDefinitionVersionRepository = context.Locate.Advanced.GetInstance<IApprovalDefinitionVersionRepository>();
             _contentRepository = context.Locate.Advanced.GetInstance<IContentRepository>();
             _notifier = context.Locate.Advanced.GetInstance<INotifier>();

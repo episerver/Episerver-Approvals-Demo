@@ -2,6 +2,7 @@
 using System.Linq;
 using EPiServer;
 using EPiServer.Approvals;
+using EPiServer.Approvals.ContentApprovals;
 using EPiServer.Core;
 using EPiServer.PlugIn;
 using EPiServer.Scheduler;
@@ -26,14 +27,14 @@ namespace Ascend2016.Business.ApprovalDemo
             foreach (var bot in _bots)
             {
                 // Get all approvals waiting for approval
-                var query = new ApprovalsQuery
+                var query = new ContentApprovalQuery
                 {
                     Status = ApprovalStatus.Pending,
                     Username = bot.Username,
                     OnlyActiveSteps = true
                 };
                 var approvals = _approvalRepository.Service
-                    .ListAsync(query).Result;
+                    .ListAsync<ContentApproval>(query).Result;
 
                 // Approve or reject all of them
                 foreach (var approval in approvals)
@@ -49,7 +50,7 @@ namespace Ascend2016.Business.ApprovalDemo
                             bot.Username,
                             approval.ActiveStepIndex,
                             ApprovalDecisionScope.Step).Wait();
-                        approved++; ;
+                        approved++;
                     }
                     else if (decision.Item1 == ApprovalStatus.Rejected)
                     {
