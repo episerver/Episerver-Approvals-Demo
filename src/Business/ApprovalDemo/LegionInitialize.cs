@@ -24,7 +24,7 @@ namespace Ascend2016.Business.ApprovalDemo
 
             var approversInStep = approvalDefinition
                 .Steps[e.StepIndex]
-                .Approvers
+                .Reviewers
                 .Select(x => x.Username);
 
             var botsInStep = _bots

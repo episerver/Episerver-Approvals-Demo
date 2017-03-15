@@ -29,7 +29,7 @@ namespace Ascend2016.Business.ApprovalDemo
                 // Get all approvals waiting for approval
                 var query = new ContentApprovalQuery
                 {
-                    Status = ApprovalStatus.Pending,
+                    Status = ApprovalStatus.InReview,
                     Username = bot.Username,
                     OnlyActiveSteps = true
                 };
