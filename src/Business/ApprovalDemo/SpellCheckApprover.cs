@@ -17,7 +17,7 @@ namespace Ascend2016.Business.ApprovalDemo
         public Tuple<ApprovalStatus, string> DoDecide(PageData page)
         {
             var sitePageData = page as SitePageData;
-            if (sitePageData == null)
+            if (sitePageData == null || sitePageData.TeaserText == null)
             {
                 return Tuple.Create(
                     ApprovalStatus.Rejected,
