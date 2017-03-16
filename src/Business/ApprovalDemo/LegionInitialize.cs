@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EPiServer;
 using EPiServer.Approvals;
@@ -44,7 +45,8 @@ namespace Ascend2016.Business.ApprovalDemo
                         e.ApprovalID,
                         bot.Username,
                         e.StepIndex,
-                        ApprovalDecisionScope.Step).Wait();
+                        ApprovalDecisionScope.Step,
+                        decision.Item2).Wait();
                 }
                 else if (decision.Item1 == ApprovalStatus.Approved)
                 {
@@ -52,7 +54,8 @@ namespace Ascend2016.Business.ApprovalDemo
                         e.ApprovalID,
                         bot.Username,
                         e.StepIndex,
-                        ApprovalDecisionScope.Step).Wait();
+                        ApprovalDecisionScope.Step,
+                        decision.Item2).Wait();
 
                     // Note: Rejecting will throw an exception if the step has already been approved.
                     break;
@@ -65,7 +68,6 @@ namespace Ascend2016.Business.ApprovalDemo
 
         private IContentRepository _contentRepository;
         private IEnumerable<ILegionApprover> _bots;
-        private INotifier _notifier;
 
         public void Initialize(InitializationEngine context)
         {
@@ -73,7 +75,6 @@ namespace Ascend2016.Business.ApprovalDemo
             _approvalEngineEvents = context.Locate.Advanced.GetInstance<IApprovalEngineEvents>();
             _approvalDefinitionVersionRepository = context.Locate.Advanced.GetInstance<IApprovalDefinitionVersionRepository>();
             _contentRepository = context.Locate.Advanced.GetInstance<IContentRepository>();
-            _notifier = context.Locate.Advanced.GetInstance<INotifier>();
 
             _bots = new ILegionApprover[]
             {
