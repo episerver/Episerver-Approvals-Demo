@@ -76,7 +76,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="EPiServer.Cms.Shell.UI, Version=10.7.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
-      <HintPath>packages\EPiServer.CMS.UI.Core.10.7.0-feature-012865\lib\net45\EPiServer.Cms.Shell.UI.dll</HintPath>
+      <HintPath>packages\EPiServer.CMS.UI.Core.10.7.0-feature-012879\lib\net45\EPiServer.Cms.Shell.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EPiServer.Configuration, Version=10.5.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
@@ -132,15 +132,15 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="EPiServer.Shell, Version=10.7.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
-      <HintPath>packages\EPiServer.CMS.UI.Core.10.7.0-feature-012865\lib\net45\EPiServer.Shell.dll</HintPath>
+      <HintPath>packages\EPiServer.CMS.UI.Core.10.7.0-feature-012879\lib\net45\EPiServer.Shell.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EPiServer.Shell.UI, Version=10.7.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
-      <HintPath>packages\EPiServer.CMS.UI.Core.10.7.0-feature-012865\lib\net45\EPiServer.Shell.UI.dll</HintPath>
+      <HintPath>packages\EPiServer.CMS.UI.Core.10.7.0-feature-012879\lib\net45\EPiServer.Shell.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EPiServer.UI, Version=10.7.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
-      <HintPath>packages\EPiServer.CMS.UI.Core.10.7.0-feature-012865\lib\net45\EPiServer.UI.dll</HintPath>
+      <HintPath>packages\EPiServer.CMS.UI.Core.10.7.0-feature-012879\lib\net45\EPiServer.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EPiServer.Web.WebControls, Version=10.5.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
@@ -397,7 +397,9 @@
     <Content Include="Static\jwplayer\video.mp4" />
     <Content Include="Views\Web.config" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\DefaultSiteContent.episerverdata" />
     <Content Include=".editorconfig" />
     <Content Include=".eslintignore" />
@@ -443,14 +445,14 @@
     <Content Include="Views\ArticlePage\Index.cshtml" />
     <Content Include="module.config" />
     <Content Include="Views\SearchPage\Index.cshtml" />
-    <Content Include="modules\_protected\EPiServer.Packaging.UI\web.config" />
-    <Content Include="modules\_protected\EPiServer.Packaging.UI\EPiServer.Packaging.UI.zip" />
     <Content Include="README.md" />
+    <Content Include="modules\_protected\Shell\Shell.zip" />
+    <Content Include="modules\_protected\CMS\CMS.zip" />
     <Content Include="packages.config" />
     <Content Include="modules\_protected\Shell\web.config" />
-    <Content Include="modules\_protected\Shell\Shell.zip" />
     <Content Include="modules\_protected\CMS\web.config" />
-    <Content Include="modules\_protected\CMS\CMS.zip" />
+    <Content Include="modules\_protected\EPiServer.Packaging.UI\web.config" />
+    <Content Include="modules\_protected\EPiServer.Packaging.UI\EPiServer.Packaging.UI.zip" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
