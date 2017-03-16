@@ -1,3 +1,3 @@
-# Ascend 2016 - Nordics
+# Episerver Content Approval
 
-This is the code used to demo at the Ascend event in Globen (Stockholm, Sweden) in 2016.
+This is the code used to demo Content Approvals when I (John-Philip Johansson) presents it.
