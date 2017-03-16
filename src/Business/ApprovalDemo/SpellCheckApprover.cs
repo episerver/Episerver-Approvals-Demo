@@ -88,7 +88,7 @@ namespace Ascend2016.Business.ApprovalDemo
                 public class SuggestionObject
                 {
                     public string Suggestion { get; set; }
-                    public int Score { get; set; }
+                    public double Score { get; set; }
                 }
             }
 
