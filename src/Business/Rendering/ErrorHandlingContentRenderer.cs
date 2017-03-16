@@ -3,14 +3,14 @@ using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using Approvals.Models.ViewModels;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.Security;
-using Ascend2016.Models.ViewModels;
 using EPiServer.Web.Mvc;
 using EPiServer.XForms;
 
-namespace Ascend2016.Business.Rendering
+namespace Approvals.Business.Rendering
 {
     /// <summary>
     /// Wraps an MvcContentRenderer and adds error handling to ensure that blocks and other content

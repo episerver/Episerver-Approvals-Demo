@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using Approvals.Business.Rendering;
+using Approvals.Models.Properties;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.DataAnnotations;
-using Ascend2016.Business.Rendering;
-using Ascend2016.Models.Properties;
 using EPiServer.Web;
 
-namespace Ascend2016.Models.Pages
+namespace Approvals.Models.Pages
 {
     /// <summary>
     /// Base class for all page types

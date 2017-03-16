@@ -5,7 +5,7 @@ using EPiServer.DataAbstraction;
 using EPiServer.DataAnnotations;
 using EPiServer.Filters;
 
-namespace Ascend2016.Models.Blocks
+namespace Approvals.Models.Blocks
 {
     /// <summary>
     /// Used to insert a list of pages, for example a news list

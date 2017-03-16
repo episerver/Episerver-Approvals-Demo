@@ -2,18 +2,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Approvals.Business;
+using Approvals.Models.Pages;
+using Approvals.Models.ViewModels;
 using EPiServer.Core;
 using EPiServer.Framework.Web;
 using EPiServer.Search;
-using Ascend2016.Business;
-using Ascend2016.Models.Pages;
-using Ascend2016.Models.ViewModels;
 using EPiServer.Web;
-using EPiServer.Web.Hosting;
-using EPiServer.Web.Mvc.Html;
 using EPiServer.Web.Routing;
 
-namespace Ascend2016.Controllers
+namespace Approvals.Controllers
 {
     public class SearchPageController : PageControllerBase<SearchPage>
     {

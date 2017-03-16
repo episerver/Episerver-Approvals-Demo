@@ -1,8 +1,8 @@
 using System;
 using System.Configuration;
 using System.Linq;
-using Ascend2016.Business.ContentProviders;
-using Ascend2016.Models.Pages;
+using Approvals.Business.ContentProviders;
+using Approvals.Models.Pages;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.Framework;
@@ -11,7 +11,7 @@ using EPiServer.Logging;
 using EPiServer.ServiceLocation;
 using EPiServer.Web;
 
-namespace Ascend2016.Business.Initialization
+namespace Approvals.Business.Initialization
 {
     /// <summary>
     /// Registers a content provider used to clone global news from a global container to site(s) which specify a local page where global news should be accessible

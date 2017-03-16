@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using Ascend2016.Models.Pages;
+using Approvals.Models.Pages;
 using EPiServer.Approvals;
 using EPiServer.Core;
 using Newtonsoft.Json;
 
-namespace Ascend2016.Business.ApprovalDemo
+namespace Approvals.Business.ApprovalDemo
 {
     public class SentimentCheckApprover : ILegionApprover
     {

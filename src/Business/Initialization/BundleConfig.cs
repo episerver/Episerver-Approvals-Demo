@@ -2,7 +2,7 @@ using System.Web.Optimization;
 using EPiServer.Framework;
 using EPiServer.Framework.Initialization;
 
-namespace Ascend2016.Business.Initialization
+namespace Approvals.Business.Initialization
 {
     [InitializableModule]
     public class BundleConfig : IInitializableModule

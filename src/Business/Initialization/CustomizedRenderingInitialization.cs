@@ -1,11 +1,11 @@
 using System.Web.Mvc;
+using Approvals.Business.Rendering;
 using EPiServer.Framework;
 using EPiServer.Framework.Initialization;
 using EPiServer.ServiceLocation;
-using Ascend2016.Business.Rendering;
 using EPiServer.Web;
 
-namespace Ascend2016.Business.Initialization
+namespace Approvals.Business.Initialization
 {
     /// <summary>
     /// Module for customizing templates and rendering.

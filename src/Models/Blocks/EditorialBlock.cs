@@ -3,7 +3,7 @@ using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.DataAnnotations;
 
-namespace Ascend2016.Models.Blocks
+namespace Approvals.Models.Blocks
 {
     /// <summary>
     /// Used to insert editorial content edited using a rich-text editor

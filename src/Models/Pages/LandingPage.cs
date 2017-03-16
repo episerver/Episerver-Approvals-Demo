@@ -3,7 +3,7 @@ using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.DataAnnotations;
 
-namespace Ascend2016.Models.Pages
+namespace Approvals.Models.Pages
 {
     /// <summary>
     /// Used for campaign or landing pages, commonly used for pages linked in online advertising such as AdWords

@@ -1,4 +1,4 @@
-namespace Ascend2016.Models.Pages
+namespace Approvals.Models.Pages
 {
     /// <summary>
     /// Used primarily for publishing news articles on the website

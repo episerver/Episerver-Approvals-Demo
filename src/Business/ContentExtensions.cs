@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+using EPiServer;
 using EPiServer.Core;
 using EPiServer.Filters;
 using EPiServer.Framework.Web;
 using EPiServer.ServiceLocation;
-using EPiServer;
 
-namespace Ascend2016.Business
+namespace Approvals.Business
 {
     /// <summary>
     /// Extension methods for content

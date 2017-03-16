@@ -3,7 +3,7 @@ using EPiServer.DataAbstraction;
 using EPiServer.DataAnnotations;
 using EPiServer.XForms;
 
-namespace Ascend2016.Models.Blocks
+namespace Approvals.Models.Blocks
 {
     /// <summary>
     /// Used to insert an XForm

@@ -12,7 +12,7 @@ using EPiServer.Logging;
 using EPiServer.ServiceLocation;
 using EPiServer.Web;
 
-namespace Ascend2016.Business.ContentProviders
+namespace Approvals.Business.ContentProviders
 {
     /// <summary>
     /// Used to clone a part of the page tree

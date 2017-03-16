@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using Approvals.Business;
+using Approvals.Models.Blocks;
 using EPiServer.DataAbstraction;
 using EPiServer.Filters;
 using EPiServer.Framework.Localization;
 using EPiServer.ServiceLocation;
-using Ascend2016.Business;
-using Ascend2016.Models.Blocks;
 
-namespace Ascend2016.Models.Pages
+namespace Approvals.Models.Pages
 {
     /// <summary>
     /// Presents a news section including a list of the most recent articles on the site

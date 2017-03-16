@@ -1,10 +1,10 @@
 using System.Web.Mvc;
-using Ascend2016.Models.Media;
-using Ascend2016.Models.ViewModels;
+using Approvals.Models.Media;
+using Approvals.Models.ViewModels;
 using EPiServer.Web.Mvc;
 using EPiServer.Web.Routing;
 
-namespace Ascend2016.Controllers
+namespace Approvals.Controllers
 {
     /// <summary>
     /// Controller for the image file.

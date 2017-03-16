@@ -2,7 +2,7 @@ using EPiServer.Framework.Localization;
 using EPiServer.ServiceLocation;
 using EPiServer.Web;
 
-namespace Ascend2016.Business.Channels
+namespace Approvals.Business.Channels
 {
     /// <summary>
     /// Base class for all resolution definitions

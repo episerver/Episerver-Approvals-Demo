@@ -1,6 +1,6 @@
 using EPiServer.Core;
 
-namespace Ascend2016.Models.Pages
+namespace Approvals.Models.Pages
 {
     public interface IHasRelatedContent
     {

@@ -1,5 +1,5 @@
 
-namespace Ascend2016.Models.Blocks
+namespace Approvals.Models.Blocks
 {
     /// <summary>
     /// Base class for all block types on the site

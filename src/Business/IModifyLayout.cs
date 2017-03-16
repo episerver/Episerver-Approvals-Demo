@@ -1,6 +1,6 @@
-using Ascend2016.Models.ViewModels;
+using Approvals.Models.ViewModels;
 
-namespace Ascend2016.Business
+namespace Approvals.Business
 {
     /// <summary>
     /// Defines a method which may be invoked by PageContextActionFilter allowing controllers

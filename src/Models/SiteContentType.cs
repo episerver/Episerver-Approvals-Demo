@@ -1,6 +1,6 @@
 using EPiServer.DataAnnotations;
 
-namespace Ascend2016.Models
+namespace Approvals.Models
 {
     /// <summary>
     /// Attribute used for site content types to set default attribute values

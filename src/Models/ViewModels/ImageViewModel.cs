@@ -1,5 +1,5 @@
 
-namespace Ascend2016.Models.ViewModels
+namespace Approvals.Models.ViewModels
 {
     /// <summary>
     /// View model for the image file

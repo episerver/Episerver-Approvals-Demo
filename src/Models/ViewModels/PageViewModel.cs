@@ -1,8 +1,7 @@
-using System;
+using Approvals.Models.Pages;
 using EPiServer.Core;
-using Ascend2016.Models.Pages;
 
-namespace Ascend2016.Models.ViewModels
+namespace Approvals.Models.ViewModels
 {
     public class PageViewModel<T> : IPageViewModel<T> where T : SitePageData
     {

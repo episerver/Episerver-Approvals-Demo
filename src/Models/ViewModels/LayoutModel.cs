@@ -1,12 +1,9 @@
-using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
-using EPiServer.Core;
+using Approvals.Models.Blocks;
 using EPiServer.SpecializedProperties;
-using Ascend2016.Models.Blocks;
 
-namespace Ascend2016.Models.ViewModels
+namespace Approvals.Models.ViewModels
 {
     public class LayoutModel
     {

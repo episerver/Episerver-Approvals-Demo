@@ -2,7 +2,7 @@ using System.Web;
 using System.Web.WebPages;
 using EPiServer.Web;
 
-namespace Ascend2016.Business.Channels
+namespace Approvals.Business.Channels
 {
      //<summary>
      //Defines the 'Mobile' content channel

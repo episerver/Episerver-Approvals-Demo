@@ -1,11 +1,11 @@
 using System;
 using System.Web.Mvc;
+using Approvals.Models.Pages;
+using Approvals.Models.ViewModels;
 using EPiServer;
 using EPiServer.Framework.DataAnnotations;
-using Ascend2016.Models.Pages;
-using Ascend2016.Models.ViewModels;
 
-namespace Ascend2016.Controllers
+namespace Approvals.Controllers
 {
     /// <summary>
     /// Concrete controller that handles all page types that don't have their own specific controllers.

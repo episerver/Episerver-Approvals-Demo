@@ -1,11 +1,11 @@
 using System.Web.Mvc;
 using System.Web.Security;
-using Ascend2016.Business;
-using Ascend2016.Models.Pages;
-using Ascend2016.Models.ViewModels;
+using Approvals.Business;
+using Approvals.Models.Pages;
+using Approvals.Models.ViewModels;
 using EPiServer.Web.Mvc;
 
-namespace Ascend2016.Controllers
+namespace Approvals.Controllers
 {
     /// <summary>
     /// All controllers that renders pages should inherit from this class so that we can 

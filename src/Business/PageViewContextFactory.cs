@@ -2,15 +2,14 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
-using Ascend2016.Helpers;
-using Ascend2016.Models.Pages;
-using Ascend2016.Models.ViewModels;
+using Approvals.Models.Pages;
+using Approvals.Models.ViewModels;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.Web;
 using EPiServer.Web.Routing;
 
-namespace Ascend2016.Business
+namespace Approvals.Business
 {
     public class PageViewContextFactory
     {

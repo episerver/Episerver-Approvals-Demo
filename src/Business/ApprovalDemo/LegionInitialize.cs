@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using EPiServer;
 using EPiServer.Approvals;
@@ -7,9 +6,8 @@ using EPiServer.Approvals.ContentApprovals;
 using EPiServer.Core;
 using EPiServer.Framework;
 using EPiServer.Framework.Initialization;
-using EPiServer.Notification;
 
-namespace Ascend2016.Business.ApprovalDemo
+namespace Approvals.Business.ApprovalDemo
 {
     [ModuleDependency(typeof(EPiServer.Web.InitializationModule))]
     public class LegionInitialize : IInitializableModule

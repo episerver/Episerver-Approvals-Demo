@@ -2,7 +2,7 @@ using System;
 using EPiServer;
 using EPiServer.Core;
 
-namespace Ascend2016.Models.ViewModels
+namespace Approvals.Models.ViewModels
 {
     public class ContentRenderingErrorModel
     {

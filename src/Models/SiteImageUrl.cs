@@ -1,6 +1,6 @@
 using EPiServer.DataAnnotations;
 
-namespace Ascend2016.Models
+namespace Approvals.Models
 {
     /// <summary>
     /// Attribute to set the default thumbnail for site page and block types

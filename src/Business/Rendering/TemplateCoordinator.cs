@@ -1,13 +1,13 @@
+using Approvals.Controllers;
+using Approvals.Models.Blocks;
+using Approvals.Models.Pages;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.ServiceLocation;
-using Ascend2016.Controllers;
-using Ascend2016.Models.Blocks;
-using Ascend2016.Models.Pages;
 using EPiServer.Web;
 using EPiServer.Web.Mvc;
 
-namespace Ascend2016.Business.Rendering
+namespace Approvals.Business.Rendering
 {
     [ServiceConfiguration(typeof(IViewTemplateModelRegistrator))]
     public class TemplateCoordinator : IViewTemplateModelRegistrator

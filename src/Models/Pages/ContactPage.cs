@@ -1,11 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using Ascend2016.Business;
-using Ascend2016.Business.EditorDescriptors;
-using Ascend2016.Business.Rendering;
-using EPiServer.Web;
+using Approvals.Business.Rendering;
 using EPiServer.Core;
+using EPiServer.Web;
 
-namespace Ascend2016.Models.Pages
+namespace Approvals.Models.Pages
 {
     /// <summary>
     /// Represents contact details for a contact person

@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Web;
+using EPiServer;
 using EPiServer.Core;
 using EPiServer.Search;
 using EPiServer.Search.Queries;
 using EPiServer.Search.Queries.Lucene;
 using EPiServer.Security;
-using EPiServer;
 
-namespace Ascend2016.Business
+namespace Approvals.Business
 {
     public class SearchService
     {

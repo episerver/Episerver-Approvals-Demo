@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
-using Ascend2016.Models.Blocks;
+using Approvals.Models.Blocks;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.DataAnnotations;
 
-namespace Ascend2016.Models.Pages
+namespace Approvals.Models.Pages
 {
     /// <summary>
     /// Used to provide on-site search

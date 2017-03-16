@@ -1,8 +1,8 @@
 using System.Collections.Generic;
+using Approvals.Models.Blocks;
 using EPiServer.Core;
-using Ascend2016.Models.Blocks;
 
-namespace Ascend2016.Models.ViewModels
+namespace Approvals.Models.ViewModels
 {
     public class PageListModel
     {

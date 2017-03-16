@@ -1,18 +1,16 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Approvals.Business;
+using Approvals.Models.Pages;
+using Approvals.Models.ViewModels;
+using EPiServer;
 using EPiServer.Core;
 using EPiServer.Framework.DataAnnotations;
 using EPiServer.Framework.Web;
-using Ascend2016.Business;
-using Ascend2016.Business.Rendering;
-using Ascend2016.Models.Pages;
-using Ascend2016.Models.ViewModels;
 using EPiServer.Web;
 using EPiServer.Web.Mvc;
-using EPiServer;
 
-namespace Ascend2016.Controllers
+namespace Approvals.Controllers
 {
     /* Note: as the content area rendering on Alloy is customized we create ContentArea instances 
      * which we render in the preview view in order to provide editors with a preview which is as 

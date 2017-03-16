@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.Web;
-using Ascend2016.Models.Pages;
+using Approvals.Models.Pages;
 
-namespace Ascend2016.Models.ViewModels
+namespace Approvals.Models.ViewModels
 {
     public class SearchContentModel : PageViewModel<SearchPage>
     {

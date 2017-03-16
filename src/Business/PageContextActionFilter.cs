@@ -1,9 +1,9 @@
 using System.Web.Mvc;
-using Ascend2016.Models.Pages;
-using Ascend2016.Models.ViewModels;
+using Approvals.Models.Pages;
+using Approvals.Models.ViewModels;
 using EPiServer.Web.Routing;
 
-namespace Ascend2016.Business
+namespace Approvals.Business
 {
     /// <summary>
     /// Intercepts actions with view models of type IPageViewModel and populates the view models

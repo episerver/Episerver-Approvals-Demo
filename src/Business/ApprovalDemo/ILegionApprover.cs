@@ -2,7 +2,7 @@
 using EPiServer.Approvals;
 using EPiServer.Core;
 
-namespace Ascend2016.Business.ApprovalDemo
+namespace Approvals.Business.ApprovalDemo
 {
     public interface ILegionApprover
     {

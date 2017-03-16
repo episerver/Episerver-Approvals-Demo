@@ -1,4 +1,4 @@
-namespace Ascend2016.Business.Channels
+namespace Approvals.Business.Channels
 {
     /// <summary>
     /// Defines resolution for desktop displays

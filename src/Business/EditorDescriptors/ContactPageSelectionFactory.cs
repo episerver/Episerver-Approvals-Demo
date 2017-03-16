@@ -3,7 +3,7 @@ using System.Linq;
 using EPiServer.ServiceLocation;
 using EPiServer.Shell.ObjectEditing;
 
-namespace Ascend2016.Business.EditorDescriptors
+namespace Approvals.Business.EditorDescriptors
 {
     /// <summary>
     /// Provides a list of options corresponding to ContactPage pages on the site

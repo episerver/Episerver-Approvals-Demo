@@ -8,7 +8,7 @@ using EPiServer.PlugIn;
 using EPiServer.Scheduler;
 using EPiServer.ServiceLocation;
 
-namespace Ascend2016.Business.ApprovalDemo
+namespace Approvals.Business.ApprovalDemo
 {
     // TODO: This does the same thing as LegionInitialize. Pick one.
     [ScheduledPlugIn(DisplayName = "Legion")]

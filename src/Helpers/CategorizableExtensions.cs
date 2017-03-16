@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.ServiceLocation;
 
-namespace Ascend2016.Helpers
+namespace Approvals.Helpers
 {
     /// <summary>
     /// Provides extension methods for categorizable content

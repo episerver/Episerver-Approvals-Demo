@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
-using Ascend2016.Models.Blocks;
+using Approvals.Models.Blocks;
+using Approvals.Models.Properties;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.DataAnnotations;
-using Ascend2016.Models.Properties;
 
-namespace Ascend2016.Models.Pages
+namespace Approvals.Models.Pages
 {
     /// <summary>
     /// Used to present a single product

@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
+using Approvals.Models.Blocks;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.DataAnnotations;
 using EPiServer.SpecializedProperties;
-using Ascend2016.Models.Blocks;
 
-namespace Ascend2016.Models.Pages
+namespace Approvals.Models.Pages
 {
     /// <summary>
     /// Used for the site's start page and also acts as a container for site settings

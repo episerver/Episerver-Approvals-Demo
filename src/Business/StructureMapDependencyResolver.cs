@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using StructureMap;
 
-namespace Ascend2016.Business
+namespace Approvals.Business
 {
     public class StructureMapDependencyResolver : IDependencyResolver
     {

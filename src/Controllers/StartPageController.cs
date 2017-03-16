@@ -1,10 +1,10 @@
 using System.Web.Mvc;
-using Ascend2016.Models.Pages;
-using Ascend2016.Models.ViewModels;
+using Approvals.Models.Pages;
+using Approvals.Models.ViewModels;
 using EPiServer.Web;
 using EPiServer.Web.Mvc;
 
-namespace Ascend2016.Controllers
+namespace Approvals.Controllers
 {
     public class StartPageController : PageControllerBase<StartPage>
     {

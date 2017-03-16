@@ -1,7 +1,7 @@
+using Approvals.Models.Pages;
 using EPiServer.Core;
-using Ascend2016.Models.Pages;
 
-namespace Ascend2016.Models.ViewModels
+namespace Approvals.Models.ViewModels
 {
     /// <summary>
     /// Defines common characteristics for view models for pages, including properties used by layout files.

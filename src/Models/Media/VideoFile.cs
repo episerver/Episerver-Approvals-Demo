@@ -4,7 +4,7 @@ using EPiServer.DataAnnotations;
 using EPiServer.Framework.DataAnnotations;
 using EPiServer.Web;
 
-namespace Ascend2016.Models.Media
+namespace Approvals.Models.Media
 {
     [ContentType(GUID = "85468104-E06F-47E5-A317-FC9B83D3CBA6")]
     [MediaDescriptor(ExtensionString = "flv,mp4,webm")]

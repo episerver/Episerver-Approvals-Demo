@@ -6,14 +6,14 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using Approvals.Business;
+using EPiServer;
 using EPiServer.Core;
 using EPiServer.ServiceLocation;
-using Ascend2016.Business;
 using EPiServer.Web.Mvc.Html;
 using EPiServer.Web.Routing;
-using EPiServer;
 
-namespace Ascend2016.Helpers
+namespace Approvals.Helpers
 {
     public static class HtmlHelpers
     {

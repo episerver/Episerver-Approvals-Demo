@@ -4,7 +4,7 @@ using EPiServer.Core;
 using EPiServer.Shell.ObjectEditing;
 using EPiServer.Shell.ObjectEditing.EditorDescriptors;
 
-namespace Ascend2016.Business.EditorDescriptors
+namespace Approvals.Business.EditorDescriptors
 {
     /// <summary>
     /// Registers an editor to select a ContactPage for a PageReference property using a dropdown

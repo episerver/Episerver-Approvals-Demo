@@ -1,13 +1,13 @@
 using System.Linq;
 using System.Web;
 using System.Web.WebPages;
+using Approvals.Business.Channels;
 using EPiServer.Framework;
 using EPiServer.Framework.Initialization;
 using EPiServer.ServiceLocation;
-using Ascend2016.Business.Channels;
 using EPiServer.Web;
 
-namespace Ascend2016.Business.Initialization
+namespace Approvals.Business.Initialization
 {
     /// <summary>
     /// Adds a new display mode for mobile which is active if the mobile channel is active in addition to if the request is from a mobile device (like the default one)

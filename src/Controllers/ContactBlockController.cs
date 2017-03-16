@@ -1,15 +1,15 @@
 using System.Web;
 using System.Web.Mvc;
+using Approvals.Helpers;
+using Approvals.Models.Blocks;
+using Approvals.Models.Pages;
+using Approvals.Models.ViewModels;
+using EPiServer;
 using EPiServer.Core;
-using Ascend2016.Helpers;
-using Ascend2016.Models.Blocks;
-using Ascend2016.Models.Pages;
-using Ascend2016.Models.ViewModels;
 using EPiServer.Web;
 using EPiServer.Web.Mvc;
-using EPiServer;
 
-namespace Ascend2016.Controllers
+namespace Approvals.Controllers
 {
     public class ContactBlockController : BlockController<ContactBlock>
     {

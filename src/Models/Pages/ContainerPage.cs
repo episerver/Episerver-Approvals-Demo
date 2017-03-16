@@ -1,6 +1,6 @@
-using Ascend2016.Business.Rendering;
+using Approvals.Business.Rendering;
 
-namespace Ascend2016.Models.Pages
+namespace Approvals.Models.Pages
 {
     /// <summary>
     /// Used to logically group pages in the page tree

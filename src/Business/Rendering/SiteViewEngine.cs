@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Web.Mvc;
 
-namespace Ascend2016.Business.Rendering
+namespace Approvals.Business.Rendering
 {
     /// <summary>
     /// Extends the Razor view engine to include the folders ~/Views/Shared/Blocks/ and ~/Views/Shared/PagePartials/

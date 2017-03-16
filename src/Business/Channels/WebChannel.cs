@@ -1,7 +1,7 @@
 using System.Web;
 using EPiServer.Web;
 
-namespace Ascend2016.Business.Channels
+namespace Approvals.Business.Channels
 {
     /// <summary>
     /// Defines the 'Web' content channel

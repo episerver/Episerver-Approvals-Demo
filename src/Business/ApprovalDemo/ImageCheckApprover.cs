@@ -3,14 +3,14 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
-using Ascend2016.Models.Pages;
+using Approvals.Models.Pages;
 using EPiServer;
 using EPiServer.Approvals;
 using EPiServer.Core;
 using EPiServer.ServiceLocation;
 using Newtonsoft.Json;
 
-namespace Ascend2016.Business.ApprovalDemo
+namespace Approvals.Business.ApprovalDemo
 {
     public class ImageCheckApprover : ILegionApprover
     {

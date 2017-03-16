@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using EPiServer.DataAbstraction;
 using EPiServer;
+using EPiServer.DataAbstraction;
 
-namespace Ascend2016.Models.Blocks
+namespace Approvals.Models.Blocks
 {
     /// <summary>
     /// Used to insert a link which is styled as a button

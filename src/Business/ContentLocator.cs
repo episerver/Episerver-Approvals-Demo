@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
-using Ascend2016.Models.Pages;
+using Approvals.Models.Pages;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.Filters;
 using EPiServer.Web;
 
-namespace Ascend2016.Business
+namespace Approvals.Business
 {
     public class ContentLocator
     {

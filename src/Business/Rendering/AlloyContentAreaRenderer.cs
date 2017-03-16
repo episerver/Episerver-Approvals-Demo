@@ -1,13 +1,11 @@
 using System;
 using System.Web.Mvc;
+using EPiServer;
 using EPiServer.Core;
 using EPiServer.Core.Html.StringParsing;
-using EPiServer.Web;
-using EPiServer.Web.Mvc;
 using EPiServer.Web.Mvc.Html;
-using EPiServer;
 
-namespace Ascend2016.Business.Rendering
+namespace Approvals.Business.Rendering
 {
     /// <summary>
     /// Extends the default <see cref="ContentAreaRenderer"/> to apply custom CSS classes to each <see cref="ContentFragment"/>.

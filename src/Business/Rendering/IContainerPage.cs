@@ -1,4 +1,4 @@
-namespace Ascend2016.Business.Rendering
+namespace Approvals.Business.Rendering
 {
     /// <summary>
     /// Marker interface for content types which should not be handled by DefaultPageController.

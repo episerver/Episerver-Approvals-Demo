@@ -1,9 +1,9 @@
+using System.ComponentModel.DataAnnotations;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.DataAnnotations;
-using System.ComponentModel.DataAnnotations;
 
-namespace Ascend2016.Models.Pages
+namespace Approvals.Models.Pages
 {
     /// <summary>
     /// Used for the pages mainly consisting of manually created content such as text, images, and blocks

@@ -1,14 +1,13 @@
 using System.Web.Mvc;
+using Approvals.Business.Rendering;
 using EPiServer.Framework;
 using EPiServer.Framework.Initialization;
 using EPiServer.ServiceLocation;
-using Ascend2016.Business.Rendering;
-using Ascend2016.Helpers;
 using EPiServer.Web.Mvc;
 using EPiServer.Web.Mvc.Html;
 using StructureMap;
 
-namespace Ascend2016.Business.Initialization
+namespace Approvals.Business.Initialization
 {
     [InitializableModule]
     [ModuleDependency(typeof(EPiServer.Web.InitializationModule))]

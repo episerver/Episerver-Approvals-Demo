@@ -1,8 +1,8 @@
-using EPiServer.DataAnnotations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using EPiServer.DataAnnotations;
 
-namespace Ascend2016
+namespace Approvals
 {
 
     public class Global

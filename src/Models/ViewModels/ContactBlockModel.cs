@@ -1,10 +1,10 @@
-using System.Web;
 using System.ComponentModel.DataAnnotations;
-using Ascend2016.Models.Pages;
-using EPiServer.Web;
+using System.Web;
+using Approvals.Models.Pages;
 using EPiServer.Core;
+using EPiServer.Web;
 
-namespace Ascend2016.Models.ViewModels
+namespace Approvals.Models.ViewModels
 {
     public class ContactBlockModel
     {
